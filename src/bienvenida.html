@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>TP INTEGRADOR GRUPO 3</title>
+
+<!--Favicon-->
+<link rel="icon" type="image/png" href="./img/favicon.png">
+
+<!--Bootstrap-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<head>
+    <!--NAVBAR-->
+    <!--Barra de navegacion principal-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <!--container para centrar el contenido-->
+        <div class="container"> 
+            <!--Logo y nombre de la web-->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+
+                <!--Logo-->
+                <img src="./img/logo.png" 
+                alt="Logo" 
+                width="40"
+                class="me-2">
+
+
+                <!--Nombre de la web-->
+                TP INTEGRADOR GRUPO 3
+
+            </a>
+
+            <!--Boton para celulares-->
+            <button 
+                class= "navbar-toggler"
+                type= "button"
+                data-bs-toggle= "collapse"
+                data-bs-target= "#menu">
+                
+                <span class= "navbar-toggler-icon"></span>
+            </button>
+
+            <!--Menu que se colapsa en pantallas chicas-->
+            <div class="collapse navbar-collapse" id="menu">
+
+                <!--ms-auto empuja los elementos a la derecha-->
+                <ul class="navbar-nav ms-auto">
+
+                    <!--Pagina Actual-->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            Inicio
+                        </a>
+
+                    </li>
+
+                    <!--Catálogo de libros-->
+                    <li class = "nav-item">
+                        <a class="nav-link" href="#">
+                            Libros
+                        </a>
+                    </li>
+
+                    <!--Catálogo de películas-->
+                    <li class = "nav-item">
+                        <a class="nav-link" href="#">
+                            Películas
+                        </a>
+
+                    </li>
+
+                    <!--Carrito de compras-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Carrito
+                        </a>
+
+                    </li>
+
+                </ul>
+            
+            </div>
+        </div>
+    </nav>
+
+    <!--CONTENIDO PRINCIPAL-->
+
+    <main class = "container">
+
+
+        <!--justify content center: centra horizontalmente-->
+
+        <div class="row justify-content-center mt-5">
+            
+
+            <!--Columna responsive: en pantallas mas grandes ocupa menos espacio-->
+            <div class="col-md-8 col-lg-6">
+
+                <!--Card de bienvenida-->
+                <div class="card shadow-1g border-0 rounded-4">
+
+                    <!--Cuerpo de la card-->
+                    <div class="card-body p-5 text-center">
+
+                    
+
+
+                         <!-- Nombre de la aplicación -->
+                        <h1 class="fw-bold mb-3">
+                        Bienvenido a tp integrador grupo 3
+                        </h1>
+
+
+                         <!-- Descripción -->
+                        <p class="text-muted mb-4">
+
+                        Descubrí una amplia colección de
+                        libros y películas.
+
+                        Ingresá tu nombre para comenzar
+                        a explorar nuestro catálogo.
+
+                        </p>
+
+
+                        <!--Form de ingreso-->
+                        <form id="formBienvenida">
+                            <!--Campo nombre-->
+                            <div class="mb-4">
+                                <input 
+                                    type="text"
+                                    id="nombreCliente"
+                                    class="form-control form-control-lg"
+                                    placeholder="Ingrese su nombre"
+                                    required>
+
+                            </div>
+
+                            <!--Botón de ingreso-->
+                            <button 
+                                type="submit"
+                                class="btn btn-primary btn-lg w-100">
+
+                                Ingresar al catálogo
+
+                            </button>
+
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+            
+        
+        
+        
+        </div>
+
+    </main>
+
+
+
+</head>

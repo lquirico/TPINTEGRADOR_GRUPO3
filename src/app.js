@@ -8,6 +8,10 @@ const sequelize = require("./config/database");
 //importo el modelo de producto para que sequelize sepa que existe 
 // y pueda crear la tabla correspondiente
 const Producto = require("./models/Producto");
+const UsuarioAdmin = require("./models/UsuarioAdmin");
+const Ventas = require("./models/Ventas");
+const Venta_productos = require("./models/Venta_productos");
+const Logs = require("./models/Logs");
 
 //importo las rutas de productos para que el servidor sepa que existen y pueda usarlas
 // dentro de este archivo estaran los GET/POST/PUT/DELETE relacionados con productos
