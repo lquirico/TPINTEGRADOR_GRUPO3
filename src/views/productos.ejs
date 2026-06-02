@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Productos</title>
+</head>
+<body>
+
+    <h1>Listado de Productos</h1>
+
+<a href="/productos/nuevo">
+    Nuevo Producto
+</a>
+
+
+<hr>
+
+    <% productos.forEach(producto => { %>
+
+        <div>
+            <h3><%= producto.nombre %></h3>
+            <a href="/productos/editar/<%= producto.id %>">
+                    Editar
+            </a>
+
+            <p>
+                Categoría: <%= producto.categoria %>
+            </p>
+            <p>
+                Descripción: <%= producto.descripcion %>
+            </p>
+
+            <p>
+                Género: <%= producto.genero %>
+            </p>
+
+            <p>
+                Precio: $<%= producto.precio %>
+            </p>
+
+            <hr>
+            <form
+    action="/productos/eliminar/<%= producto.id %>"
+    method="POST">
+
+    <button type="submit">
+        Eliminar
+    </button>
+
+</form>
+
+        </div>
+
+    <% }) %>
+
+</body>
+</html>
