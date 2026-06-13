@@ -3,13 +3,29 @@
 
 <head>
     <title>Editar Producto</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+        <link rel="stylesheet" href="/css/estilos.css">
 </head>
 
 <body>
 
+    <a href="/productos">
+        ← Volver al listado
+    </a>
+
+    <hr>
+
     <h1>Editar Producto</h1>
 
-    <form action="/productos/editar/<%= producto.id %>" method="POST">
+    <form
+        id="formEditarProducto"
+        action="/productos/editar/<%= producto.id %>"
+        method="POST"
+        enctype="multipart/form-data"
+        >
 
         <input
             type="text"
@@ -35,7 +51,7 @@
         <br><br>
 
         <input
-            type="text"
+            type="file"
             name="imagen"
             value="<%= producto.imagen %>"
             required>
@@ -58,11 +74,83 @@
 
         <br><br>
 
-        <button type="submit">
+        <button
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#modalEditar">
+
             Guardar Cambios
+
         </button>
 
     </form>
+
+    <!-- MODAL PARA CONFIRMAR EDICION -->
+
+    <div
+        class="modal fade"
+        id="modalEditar"
+        tabindex="-1">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Confirmar modificacion
+                    </h5>
+
+                </div>
+
+                <div class="modal-body">
+
+                    ¿Esta seguro de que desea modificar este producto?
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                        No
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="enviarFormularioEdicion()">
+
+                        Si
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        function enviarFormularioEdicion() {
+
+            document
+                .getElementById("formEditarProducto")
+                .submit();
+
+        }
+
+    </script>
 
 </body>
 
