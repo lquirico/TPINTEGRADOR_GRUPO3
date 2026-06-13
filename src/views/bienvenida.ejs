@@ -110,12 +110,15 @@
 
 
                         <!--Form de ingreso-->
-                        <form id="formBienvenida">
+                        <form id="formBienvenida"
+                              action="/productos/catalogo" //ruta a la que se envía el formulario
+                              method="POST">
                             <!--Campo nombre-->
                             <div class="mb-4">
                                 <input 
                                     type="text"
                                     id="nombreCliente"
+                                    name="nombreCliente" //campo que toma el nombre del cliente para utiliarlo en el catálogo.
                                     class="form-control form-control-lg"
                                     placeholder="Ingrese su nombre"
                                     required>

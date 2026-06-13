@@ -10,6 +10,8 @@ const sequelize = require("./config/database");
 require("./models/asociaciones");
 
 // Rutas
+
+// importar rutas para productos
 const productosRoutes = require("./routes/productosRoutes");
 const authRoutes = require("./routes/authRoutes");
 
