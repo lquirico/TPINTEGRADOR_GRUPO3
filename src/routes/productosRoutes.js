@@ -150,4 +150,74 @@ router.post("/eliminar/:id", async (req, res) => {
 
 });
 
+
+
+//--------------------------------------------------------------------------------------------------------
+//Ruta para probar  catalogo de productos (no es necesario, solo para pruebas)
+//La ruta recibe el nombre que el cliente ingresa en el form de bienvenida 
+  router.post("/catalogo", (req, res) => { 
+    const nombreCliente = req.body.nombreCliente; // Obtener el nombre del cliente desde el formulario de bienvenida desde el campo "name= 'nombreCliente'" en el form.
+
+
+    const productos = [
+    {
+      id: 1,
+      nombre: "Harry Potter",
+      descripcion: "Un joven mago descubre su destino en un mundo mágico lleno de aventuras y peligros.",
+      precio: 15000,
+      imagen: "https://picsum.photos/300/400",
+      categoria: "libro",
+      genero: "fantasia",
+      activo: true
+      
+    },
+    {
+      id: 2,
+      nombre: "Interstellar",
+      descripcion: "Un grupo de astronautas viaja a través de un agujero de gusano en busca de un nuevo hogar para la humanidad.",
+      precio: 12000,
+      imagen: "https://picsum.photos/300/401",
+      categoria: "pelicula",
+      genero: "ciencia ficcion",
+      activo: true
+      
+      
+      
+    },
+    {
+      id: 3,
+      nombre: "Scary Movie",
+      descripcion: "Una parodia de las películas de terror más famosas, llena de humor absurdo y situaciones ridículas.",
+      precio: 8000,
+      imagen: "https://picsum.photos/300/402",
+      categoria: "pelicula",
+      genero: "comedia",
+      activo: true
+    },
+    {
+      id: 4,
+      nombre: "El Señor de los Anillos",
+      descripcion: "Un hobbit emprende una peligrosa misión para destruir un anillo malvado que amenaza con dominar el mundo.",
+      precio: 20000,
+      imagen: "https://picsum.photos/300/403",
+      categoria: "libro",
+      genero: "fantasia",
+      activo: true
+    }
+  ];
+
+  res.render("catalogoProductos", {
+    productos,
+    nombreCliente
+  });
+
+
+});
+
+
+
 module.exports = router;
+
+
+
+

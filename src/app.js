@@ -14,6 +14,7 @@ const Ventas = require("./models/Ventas");
 const Venta_productos = require("./models/Venta_productos");
 const Logs = require("./models/Logs");
 
+
 // importar rutas para productos
 const productosRoutes = require("./routes/productosRoutes");
 
