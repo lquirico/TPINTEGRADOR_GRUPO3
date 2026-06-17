@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="#">
+
+                <img
+                    src="/img/logo.png"
+                    alt="Logo"
+                    width="40"
+                    class="me-2">
+
+                Tienda de Libros y Películas - Aldana & Lucia
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <div class="container mt-4">
+
+        <!-- BIENVENIDA -->
+        <h1 class="text-center mb-4">
+            Bienvenido, <%= nombreCliente %>!
+        </h1>
+
+         <!-- ================== 
+        <p class="text-center">
+            Total productos: <%= productos.length %>
+        </p>
+            <% productos.forEach(producto => { %>
+            <p>
+                <%= producto.nombre %> -
+                <%= producto.categoria %>
+            </p>
+        <% }) %>
+          =================== -->
+
+        <!-- ==================
+             SECCIÓN LIBROS
+        =================== -->
+
+        <h2 class="mb-3">
+            Libros
+        </h2>
+
+        <div class="row">
+
+            <% productos.forEach(producto => { %>
+
+                <% if (producto.categoria && producto.categoria.toLowerCase() === "libro") { %>
+
+                    <div class="col-md-4 mb-4">
+
+                        <div class="card h-100">
+
+                            <img
+                                src="/uploads/<%= producto.imagen %>"
+                                class="card-img-top"
+                                alt="<%= producto.nombre %>">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    <%= producto.nombre %>
+                                </h5>
+
+                                <p class="card-text">
+                                    <%= producto.descripcion %>
+                                </p>
+
+                                <p>
+                                    Género:
+                                    <strong>
+                                        <%= producto.genero %>
+                                    </strong>
+                                </p>
+
+                                <p>
+                                    Precio:
+                                    <strong>
+                                        $<%= producto.precio %>
+                                    </strong>
+                                </p>
+
+                                <form
+                                    action="/carrito/agregar/<%= producto.id %>"
+                                    method="POST">
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-success">
+
+                                        Agregar al carrito
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% } %>
+
+            <% }) %>
+
+        </div>
+
+        <!-- ==================
+             SECCIÓN PELÍCULAS
+        =================== -->
+
+        <h2 class="mt-5 mb-3">
+            Películas
+        </h2>
+
+        <div class="row">
+
+            <% productos.forEach(producto => { %>
+
+                <% if (producto.categoria && producto.categoria.toLowerCase() === "pelicula") { %>
+
+                    <div class="col-md-4 mb-4">
+
+                        <div class="card h-100">
+
+                            <img
+                                src="/uploads/<%= producto.imagen %>"
+                                class="card-img-top"
+                                alt="<%= producto.nombre %>">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    <%= producto.nombre %>
+                                </h5>
+
+                                <p class="card-text">
+                                    <%= producto.descripcion %>
+                                </p>
+
+                                <p>
+                                    Género:
+                                    <strong>
+                                        <%= producto.genero %>
+                                    </strong>
+                                </p>
+
+                                <p>
+                                    Precio:
+                                    <strong>
+                                        $<%= producto.precio %>
+                                    </strong>
+                                </p>
+
+                                <form
+                                    action="/carrito/agregar/<%= producto.id %>"
+                                    method="POST">
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-success">
+
+                                        Agregar al carrito
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% } %>
+
+            <% }) %>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

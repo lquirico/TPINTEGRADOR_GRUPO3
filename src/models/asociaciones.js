@@ -6,32 +6,43 @@ const Ventas = require("./Ventas");
 const Venta_productos = require("./Venta_productos");
 
 
-// Asociaciones entre UsuarioAdmin y Logs. Un UsuarioAdmin puede tener muchos Logs, y cada Log pertenece a un UsuarioAdmin.
+
+// un usuario admin puede tener muchos logs, pero un log solo pertenece a un usuario admin
 UsuarioAdmin.hasMany(Logs, {
   foreignKey: "usuarioId"
 });
 
+// aca se establece la relación inversa, un log pertenece a un usuario admin
 Logs.belongsTo(UsuarioAdmin, {
   foreignKey: "usuarioId"
 });
 
-// Asociaciones entre Ventas y Venta_productos. Una Venta puede tener muchos Venta_productos,
-//  y cada Venta_producto pertenece a una Venta.
-Ventas.hasMany(Venta_productos, {
-  foreignKey: "ventaId"
-});
 
-Venta_productos.belongsTo(Ventas, {
-  foreignKey: "ventaId"
-});
+// =================================================
+// asociacion mediante la tabla intermedia Venta_productos
+// ==================================================
 
 
-// Asociaciones entre Producto y Venta_productos. Un Producto puede tener muchos Venta_productos, 
-// y cada Venta_producto pertenece a un Producto.
-Producto.hasMany(Venta_productos, {
-  foreignKey: "productoId"
+// una venta puede tener muchos productos, y un producto puede estar en muchas ventas, por eso se usa una tabla intermedia para establecer la relación de muchos a muchos
+Ventas.belongsToMany(Producto, {
+  through: Venta_productos,
+  foreignKey: "ventaId",
+  otherKey: "productoId",
+  as: "productos" // el as es para darle un alias a la relación, para que al hacer consultas podamos usar ese alias en lugar del nombre de la tabla intermedia
 });
 
-Venta_productos.belongsTo(Producto, {
-  foreignKey: "productoId"
+Producto.belongsToMany(Ventas, {
+  through: Venta_productos,
+  foreignKey: "productoId",
+  otherKey: "ventaId",
+  as: "ventas" // el as es para darle un alias a la relación, para que al hacer consultas podamos usar ese alias en lugar del nombre de la tabla intermedia
 });
+
+
+module.exports = {
+  UsuarioAdmin,
+  Logs,
+  Producto,
+  Ventas,
+  Venta_productos
+};

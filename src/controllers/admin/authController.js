@@ -2,12 +2,12 @@
 const bcrypt = require("bcrypt");
 
 // uso de modelo UsuarioAdmin para buscar usuarios en la base de datos
-const UsuarioAdmin = require("../models/UsuarioAdmin");
+const UsuarioAdmin = require("../../models/UsuarioAdmin");
 
 // controlador para mostrar la página de login
 const mostrarLogin = (req, res) => {
 
-  res.render("login");
+  res.render("bienvenida");
 
 };
 
@@ -43,7 +43,7 @@ const login = async (req, res) => {
       email: usuario.email
     };
     // una vez logueado redirijo a la pagina de productos  
-    res.redirect("/productos");
+  res.redirect("/admin/productos");
 
   } catch (error) {
 
@@ -65,15 +65,83 @@ const logout = (req, res) => {
       return res.send("Error al cerrar sesion");
     }
     // redirijo a la pagina de login despues de cerrar sesion
-    res.redirect("/login");
+    res.redirect("/");
 
   });
 
 };
 
+// controlador para mostrar el formulario de registro de nuevos usuarios administradores
+const mostrarRegistro = (req, res) => {
+
+  res.render("admin/registro");
+
+};
+
+// controlador para manejar el proceso de registro de nuevos usuarios administradores
+const registrar = async (req, res) => {
+
+  try {
+
+    const { email, password, confirmarPassword } = req.body;
+
+    if (!email || !password || !confirmarPassword) {
+
+      return res.render("admin/registro", {
+        error: "Todos los campos son obligatorios"
+      });
+
+    }
+
+    if (password !== confirmarPassword) {
+
+      return res.render("admin/registro", {
+        error: "Las contraseñas no coinciden"
+      });
+
+    }
+
+    const usuarioExistente = await UsuarioAdmin.findOne({
+      where: { email }
+    });
+
+    if (usuarioExistente) {
+
+      return res.render("admin/registro", {
+        error: "Ya existe un usuario con ese email"
+      });
+
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    await UsuarioAdmin.create({
+
+      email,
+      password: passwordHash
+
+    });
+
+    res.redirect("/");
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.render("admin/registro", {
+      error: "Error al registrar usuario"
+    });
+
+  }
+
+};
+
+
 // exporto los controladores para ser utilizados en las rutas
 module.exports = {
   mostrarLogin,
+  mostrarRegistro,
+  registrar,
   login,
   logout
 };
