@@ -85,6 +85,18 @@ const crearProducto = async (req, res) => {
       return res.send("Debe seleccionar una imagen");
     }
 
+    // Validación precio
+    if (isNaN(precio) || Number(precio) < 0) {
+      return res.send("El precio debe ser un número mayor o igual a 0");
+    }
+
+    // Validación categoría
+    const categoriasValidas = ["Libro", "Película"];
+
+    if (!categoriasValidas.includes(categoria)) {
+      return res.send("Categoría inválida");
+    }
+
     await Producto.create({
 
       nombre: nombre.trim(),

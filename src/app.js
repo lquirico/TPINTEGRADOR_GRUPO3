@@ -44,6 +44,14 @@ app.use(
 app.set("view engine", "ejs"); // se establece EJS como el motor de plantillas para renderizar las vistas, esto permite generar HTML dinámico a partir de archivos de plantilla
 app.set("views", path.join(__dirname, "views")); // se establece la carpeta "views" como el lugar donde se encuentran las plantillas EJS, esto permite organizar las vistas en una ubicación específica dentro del proyecto
 
+//-----------------------------------------------------------------------------
+//Arcihvos estáticos
+//Se configura la carpeta "public" para que Express pueda servir archivos estáticos como hojas de estilo (CSS), imágenes y archivos JS.
+//Con esto, cualquier archivo ubicado en "public" podrá ser accedido desde el navegador con una ruta relativa.
+app.use(express.static(path.join(__dirname, "../public")));
+
+
+
 // Rutas
 app.use("/admin/productos", productosRoutes);
 //app.use("/", catalogoRoute);

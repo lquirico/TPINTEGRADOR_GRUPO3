@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Productos</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
+
+    
+
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -19,12 +26,12 @@
             <a class="navbar-brand" href="#">
 
                 <img
-                    src="/img/logo.png"
+                    src="/img/bookflix_logo.png"
                     alt="Logo"
                     width="40"
                     class="me-2">
 
-                Tienda de Libros y Películas - Aldana & Lucia
+                Bookflix - Tienda de libros y películas
 
             </a>
 
@@ -98,20 +105,18 @@
                                     </strong>
                                 </p>
 
-                                <form
-                                    action="/carrito/agregar/<%= producto.id %>"
-                                    method="POST">
-
-                                    <button
-                                        type="submit"
-                                        class="btn btn-success">
-
-                                        Agregar al carrito
-
-                                    </button>
-
-                                </form>
-
+                                <button
+                                type="button"
+                                class="btn btn-success btnAgregarCarrito"
+                                data-id="<%= producto.id %>"
+                                data-nombre="<%= producto.nombre %>"
+                                data-precio="<%= producto.precio %>"
+                                data-imagen="<%= producto.imagen %>"
+                                data-categoria="<%= producto.categoria %>"
+                                data-genero="<%= producto.genero %>"> <!--"data" se utiliza para transportar toda la información del producto. 
+                                                                        JavaScript ya tiene toda la info y no es necesario consultar nuevamente a la base -->
+                                    Agregar al carrito
+                                </button>
                             </div>
 
                         </div>
@@ -171,19 +176,18 @@
                                     </strong>
                                 </p>
 
-                                <form
-                                    action="/carrito/agregar/<%= producto.id %>"
-                                    method="POST">
-
-                                    <button
-                                        type="submit"
-                                        class="btn btn-success">
-
-                                        Agregar al carrito
-
-                                    </button>
-
-                                </form>
+                                <button
+                                type="button"
+                                class="btn btn-success btnAgregarCarrito"
+                                data-id="<%= producto.id %>"
+                                data-nombre="<%= producto.nombre %>"
+                                data-precio="<%= producto.precio %>"
+                                data-imagen="<%= producto.imagen %>"
+                                data-categoria="<%= producto.categoria %>"
+                                data-genero="<%= producto.genero %>"> <!--"data" se utiliza para transportar toda la información del producto. 
+                                                                        JavaScript ya tiene toda la info y no es necesario consultar nuevamente a la base -->
+                                    Agregar al carrito
+                                </button>
 
                             </div>
 
@@ -198,6 +202,6 @@
         </div>
 
     </div>
-
+<script src="/js/carrito.js"></script> <!--con esto, el navegador carga el archivo-->
 </body>
 </html>

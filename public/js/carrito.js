@@ -1,0 +1,70 @@
+//========================= CARRITO DE COMPRAS ===========================
+
+console.log("carrito.js cargado correctamente");
+
+
+//Este código se va a ejecutar del lado del cliente (navegador)
+//No utiliza MySql ni Express
+//Toda la información se almacena en el LocalStorage
+
+
+
+//OBTENER TODOS LOS BOTONES DE "Agregar al carrito"
+//"querySelectorAll va a devolver una lista con todos los elementos que tengan la clase indicada, 
+//en este caso, los botones "Agregar al carrito"
+
+const botonesAgregar = document.querySelectorAll(".btnAgregarCarrito");
+console.log(botonesAgregar);
+console.log(botonesAgregar.length);//para chequear que esté tomando todos los botones.
+
+
+//RECORRER TODOS LOS BOTONES AGREGADOS
+//El forEach ejecuta el código una vez por cada botón
+botonesAgregar.forEach(boton => { 
+    boton.addEventListener("click", () => { //Escucha el click del botón
+        console.log("se hizo click");
+
+        const producto={        //Crea un objeto Producto utilizando la información almacenada
+                                //en los atributos "data-*" del botón.
+            id: Number(boton.dataset.id),
+            nombre: boton.dataset.nombre,
+            precio: Number(boton.dataset.precio),
+            imagen: boton.dataset.imagen,
+            categoria: boton.dataset.categoria,
+            genero: boton.dataset.genero,
+            cantidad: 1
+        };
+
+        agregarAlCarrito(producto); //llama a la función que agrega el producto al carrito
+    });
+});
+
+
+
+//AGREGAR AL CARRITO
+
+function agregarAlCarrito(producto){
+    let carrito =
+        JSON.parse(localStorage.getItem("carrito")) || []; //Obtiene el carrito almacenado
+                                                          // si el carrito no existe, crea uno vacío.
+    const productoExistente = carrito.find(item => item.id === producto.id); //busca si el producto fue agregado anteriormente.
+
+    //si el producto ya existe en el carrito:
+    if(productoExistente){
+        productoExistente.cantidad++;
+    }
+    //si el producto NO existe en el carrito:
+    else{
+        carrito.push(producto);
+    }
+
+
+    //Guarda de nuevo el carrito
+    localStorage.setItem(
+        "carrito",
+        JSON.stringify(carrito) //stringify convierte el objeto en texto ya que el localStorage solo almacena texto.
+
+    );
+    alert("Producto agregado al carrito") //mensaje que se le muestra al usuario
+
+}
