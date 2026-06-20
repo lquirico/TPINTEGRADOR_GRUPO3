@@ -89,7 +89,7 @@ const crearProducto = async (req, res) => {
     }
 
     // Validación categoría
-    const categoriasValidas = ["Libro", "Pelicula"];
+    const categoriasValidas = ["Libro", "Película"];
 
     if (!categoriasValidas.includes(categoria)) {
       return res.send("Categoría inválida");
