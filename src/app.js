@@ -3,7 +3,7 @@
 const express = require("express"); // aca se importa express para crear la aplicación web
 const path = require("path"); // se importa path para manejar rutas de archivos como por ejemplo para servir archivos estáticos
 const session = require("express-session"); // se importa express-session para manejar sesiones de usuario
-
+const carritoRoute = require("./routes/cliente/carritoRoute"); //se importan las rutas relacionadas con el carrito (visualización del carrito, modificación de productos y proceso de compra)
 const sequelize = require("./config/database"); // se importa la configuración de la base de datos usando Sequelize
 
 require("./models/asociaciones"); // se importan las asociaciones entre modelos de la base de datos, esto es necesario para que Sequelize pueda manejar las relaciones entre tablas
@@ -51,6 +51,7 @@ app.use("/admin/productos", productosRoutes);
 //app.use("/", catalogoRoute);
 app.use("/", authRoutes);
 app.use("/productos", catalogoRoute);
+app.use("/carrito", carritoRoute); 
 
 
 // Página principal
