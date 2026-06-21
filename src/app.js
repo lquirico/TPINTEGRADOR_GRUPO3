@@ -13,6 +13,10 @@ const productosRoutes = require("./routes/admin/productosRoutes"); // se importa
 const authRoutes = require("./routes/admin/authRoutes"); // se importan las rutas para la autenticación de usuarios (login, logout, etc.)
 const catalogoRoute = require("./routes/cliente/catalogoRoute"); // se importan las rutas para el catalogo de productos que los clientes pueden ver
 
+// API
+const productosApiRoutes = require("./routes/api/productosApiRoutes");
+const authApiRoutes = require("./routes/api/authApiRoutes");
+
 // Crear app
 const app = express(); // se crea una instancia de la aplicación Express, que es el servidor web que manejara las solicitudes HTTP y las respuestas
 
@@ -22,6 +26,8 @@ app.use(express.urlencoded({ extended: true })); // se agrega un middleware para
 
 // se agrega un middleware para servir archivos estáticos desde la carpeta "public", esto permite que los archivos como imágenes, CSS y JavaScript estén disponibles para el cliente
 app.use(express.static(path.join(__dirname, "..", "public"))); 
+
+
 
 
 // se configura el middleware de sesiones, esto permite mantener la información del usuario a través de diferentes solicitudes HTTP,
@@ -51,8 +57,14 @@ app.use("/admin/productos", productosRoutes);
 //app.use("/", catalogoRoute);
 app.use("/", authRoutes);
 app.use("/productos", catalogoRoute);
+
 app.use("/carrito", carritoRoute); 
 
+
+//API
+app.use("/api/productos", productosApiRoutes);
+app.use("/api/admin", authApiRoutes);
+d903adeda966cb72077a19cb2ca0d20cd3aabcc8
 
 // Página principal
 app.get("/", (req, res) => {

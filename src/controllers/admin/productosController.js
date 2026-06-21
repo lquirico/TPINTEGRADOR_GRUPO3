@@ -9,8 +9,18 @@ const listarProductos = async (req, res) => {
     const pagina = parseInt(req.query.pagina) || 1; 
     const limite = 4;
 
+    //Filtro
+    const filtro = req.query.categoria || "Todos";
+    const where = {};
+
+    if (filtro !== "Todos") {
+      where.categoria = filtro;
+    }
+
     // esta linea obtiene el total de productos en la base de datos utilizando el metodo count() del modelo Producto. Esto es necesario para calcular el total de paginas disponibles.
-    const totalProductos = await Producto.count(); 
+    const totalProductos = await Producto.count({
+      where
+    }); 
 
     // esta linea calcula el total de paginas disponibles dividiendo el total de productos por el limite de productos por pagina y redondeando hacia arriba con Math.ceil()
     //  para asegurarse de que se muestre una pagina adicional si hay productos restantes.
@@ -19,6 +29,8 @@ const listarProductos = async (req, res) => {
     // esta linea obtiene los productos de la base de datos utilizando el metodo findAll() del modelo Producto. Se especifica el limite de productos por pagina
     // el offset para saltar los productos de las paginas anteriores y el orden para mostrar los productos en orden ascendente por id.
     const productos = await Producto.findAll({
+
+      where,
 
       limit: limite,
 
@@ -34,7 +46,8 @@ const listarProductos = async (req, res) => {
 
       productos,
       paginaActual: pagina,
-      totalPaginas
+      totalPaginas,
+      filtro
 
     });
 
@@ -66,17 +79,6 @@ const crearProducto = async (req, res) => {
       categoria,
       genero
     } = req.body;
-
-    // Validación de campos obligatorios
-    if (
-      !nombre?.trim() ||
-      !descripcion?.trim() ||
-      !precio ||
-      !categoria?.trim() ||
-      !genero?.trim()
-    ) {
-      return res.send("Todos los campos son obligatorios");
-    }
 
     // Validación imagen
     if (!req.file) {
@@ -137,7 +139,8 @@ const mostrarFormularioEditar = async (req, res) => {
     }
 
     res.render("admin/editarProducto", {
-      producto
+      producto,
+      pagina: req.query.pagina || 1
     });
 
   } catch (error) {
@@ -168,29 +171,6 @@ const editarProducto = async (req, res) => {
       genero
     } = req.body;
 
-    // Validación de campos obligatorios
-    if (
-      !nombre?.trim() ||
-      !descripcion?.trim() ||
-      !precio ||
-      !categoria?.trim() ||
-      !genero?.trim()
-    ) {
-      return res.send("Todos los campos son obligatorios");
-    }
-
-    // Validación precio
-    if (isNaN(precio) || Number(precio) < 0) {
-      return res.send("El precio debe ser un número mayor o igual a 0");
-    }
-
-    // Validación categoría
-    const categoriasValidas = ["Libro", "Pelicula"];
-
-    if (!categoriasValidas.includes(categoria)) {
-      return res.send("Categoría inválida");
-    }
-
     let nombreImagen = producto.imagen;
 
     if (req.file) {
@@ -216,7 +196,9 @@ const editarProducto = async (req, res) => {
 
     });
 
-    res.redirect("/admin/productos");
+    const pagina = req.body.pagina || 1;
+
+    res.redirect(`/admin/productos?pagina=${pagina}`);
 
   } catch (error) {
 

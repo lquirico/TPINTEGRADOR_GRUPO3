@@ -3,6 +3,7 @@
 // Si no lo esta, lo redirige a la pagina de login.
 function verificarLogin(req, res, next) {
 
+  // Si no hay un usuario en la sesion, redirige a login
   if (!req.session.usuario) {
     return res.redirect("/login");
   }

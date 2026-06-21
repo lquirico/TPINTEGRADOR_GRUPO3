@@ -73,6 +73,7 @@ const logout = (req, res) => {
 
 // controlador para mostrar el formulario de registro de nuevos usuarios administradores
 const mostrarRegistro = (req, res) => {
+    res.render("admin/registro");
 
   res.render("admin/registro", {
     error: null

@@ -92,6 +92,10 @@
                         action="/admin/productos/editar/<%= producto.id %>"
                         method="POST"
                         enctype="multipart/form-data">
+                        <input
+                        type="hidden"
+                        name="pagina"
+                        value="<%= pagina %>">
 
                         <div class="mb-3">
 
