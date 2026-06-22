@@ -14,15 +14,13 @@ console.log("carrito.js cargado correctamente");
 //en este caso, los botones "Agregar al carrito"
 
 const botonesAgregar = document.querySelectorAll(".btnAgregarCarrito");
-console.log(botonesAgregar);
-console.log(botonesAgregar.length);//para chequear que esté tomando todos los botones.
 
 
 //RECORRER TODOS LOS BOTONES AGREGADOS
 //El forEach ejecuta el código una vez por cada botón
 botonesAgregar.forEach(boton => { 
     boton.addEventListener("click", () => { //Escucha el click del botón
-        console.log("se hizo click");
+       
 
         const producto={        //Crea un objeto Producto utilizando la información almacenada
                                 //en los atributos "data-*" del botón.
@@ -47,6 +45,7 @@ function agregarAlCarrito(producto){
     let carrito =
         JSON.parse(localStorage.getItem("carrito")) || []; //Obtiene el carrito almacenado
                                                           // si el carrito no existe, crea uno vacío.
+    
     const productoExistente = carrito.find(item => item.id === producto.id); //busca si el producto fue agregado anteriormente.
 
     //si el producto ya existe en el carrito:
@@ -62,9 +61,59 @@ function agregarAlCarrito(producto){
     //Guarda de nuevo el carrito
     localStorage.setItem(
         "carrito",
-        JSON.stringify(carrito) //stringify convierte el objeto en texto ya que el localStorage solo almacena texto.
-
+        JSON.stringify(carrito), //stringify convierte el objeto en texto ya que el localStorage solo almacena texto.
+        mostrarMensajeCarrito()
     );
-    alert("Producto agregado al carrito") //mensaje que se le muestra al usuario
+    actualizarContadorCarrito();
+    
+    
+    
 
+}
+
+//====================================
+// ACTUALIZAR CONTADOR DE CARRITO
+//====================================
+
+//Muestra en el navbar la cantidad total de productos que se agregan al carrito.
+
+function actualizarContadorCarrito(){
+    const contador=
+        document.getElementById("contadorCarrito");
+
+        if(!contador){
+            return;
+        }
+        const carrito =
+            JSON.parse(localStorage.getItem("carrito")) || [];
+
+        let cantidadTotal= 0;
+
+        carrito.forEach(producto => {
+            cantidadTotal+= producto.cantidad;
+        });
+        contador.textContent = cantidadTotal;
+}
+
+actualizarContadorCarrito(); // cuando abre el catálogo carga directammente la cantidad actual
+
+
+//========================================
+//MENSAJE DE PRODUCTO AGREGADO AL CARRITO
+//========================================
+
+function mostrarMensajeCarrito(){
+    const mensaje = document.getElementById("mensajeCarrito");
+
+    if(!mensaje){
+        return;
+    }
+
+    //mostrar alerta
+    mensaje.classList.remove("d-none");
+
+    //ocultar alerta despues de 3 segundos
+    setTimeout(() =>{
+        mensaje.classList.add("d-none");
+    }, 3000);
 }

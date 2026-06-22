@@ -31,28 +31,6 @@
 
                 Bookflix - Tienda de libros y películas
             </a>
-
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#menu">
-
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="menu">
-
-                <ul class="navbar-nav ms-auto">
-
-                    <li class="nav-item">
-
-                    </li>
-
-                </ul>
-
-            </div>
-
         </div>
 
     </nav>
@@ -86,7 +64,7 @@
 
                             <form
                                 id="formBienvenida"
-                                action="/productos/catalogo"
+                                action="/productos/categorias"
                                 method="GET">
 
                                 <div class="mb-3">
@@ -207,5 +185,18 @@ function autocompletarLogin() {
         "123456";
 
 }
+
+//============================
+// GUARDAR NOMBRE DEL CLIENTE
+//============================
+
+document 
+    .getElementById("formBienvenida")
+    .addEventListener("submit", function(){ // cuando el cliente completa su nombre y envía el form, se guarda en localStorage.
+       const nombreCliente =                //esto permite usarlo después para el registro de ventas.
+            document.getElementById("nombreCliente").value;
+                                                            
+        localStorage.setItem("nombreCliente", nombreCliente);
+    });
 
 </script>

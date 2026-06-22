@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+
+
+    <!--Boostrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="#">
+
+                <img
+                    src="/img/bookflix_logo.png"
+                    alt="Logo"
+                    width="40"
+                    class="me-2">
+
+                Bookflix - Tienda de libros y películas
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!--CONTENIDO PRINCIPAL-->
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">
+            Mi carrito
+        </h1>
+        <!--
+        El contenedor de JavaScript va a insertar automáticamete
+        todos los productos almacenados en el localStorage
+        -->
+        <div id="contenedorCarrito"> 
+
+        </div>
+    </div>
+    <!--Archivo encargado de mostrar el carrito-->
+    <script src="/js/carritoVista.js"></script>
+    
+</body>
+</html>
