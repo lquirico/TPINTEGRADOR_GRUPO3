@@ -4,7 +4,7 @@ const Producto = require("../../models/Producto");
 const mostrarCatalogo = async (req, res) => {
 
   try {
-
+    // pido el nombre del cliente por query para mostrarlo en el catalogo
     const nombreCliente = req.query.nombreCliente;
 
     const productos = await Producto.findAll({

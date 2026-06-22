@@ -2,7 +2,14 @@ const Producto = require("../../models/Producto");
 const Logs = require("../../models/Logs");
 
 // Controlador para listar productos
+
 const listarProductos = async (req, res) => {
+
+res.render("admin/productos");
+
+};
+
+/* const listarProductos = async (req, res) => {
 
   try {
     // esta linea obtiene el numero de pagina de la query string, si no se especifica se asume que es la pagina 1. Se parsea a entero para asegurarse de que sea un numero.
@@ -58,7 +65,7 @@ const listarProductos = async (req, res) => {
 
   }
 
-};
+}; */
 
 // Controlador para mostrar formulario de alta
 const mostrarFormularioNuevo = (req, res) => {
@@ -71,7 +78,7 @@ const mostrarFormularioNuevo = (req, res) => {
 const crearProducto = async (req, res) => {
 
   try {
-
+    // obtengo datos del formulario por body
     const {
       nombre,
       descripcion,
@@ -80,21 +87,9 @@ const crearProducto = async (req, res) => {
       genero
     } = req.body;
 
-    // Validación imagen
+    // Validacion imagen
     if (!req.file) {
       return res.send("Debe seleccionar una imagen");
-    }
-
-    // Validación precio
-    if (isNaN(precio) || Number(precio) < 0) {
-      return res.send("El precio debe ser un número mayor o igual a 0");
-    }
-
-    // Validación categoría
-    const categoriasValidas = ["Libro", "Película"];
-
-    if (!categoriasValidas.includes(categoria)) {
-      return res.send("Categoría inválida");
     }
 
     await Producto.create({
@@ -107,10 +102,9 @@ const crearProducto = async (req, res) => {
       genero: genero.trim()
 
     });
-
+    // creo un nuevo registro en la tabla Logs para registrar la accion de crear un producto
     await Logs.create({
-
-      usuarioId: req.session.usuario.id,
+      usuarioId: req.session.usuario.id, // obtengo el id del usuario que esta realizando la accion desde la session
       fecha: new Date(),
       accion: `Se creo el producto ${nombre} correctamente`
 
@@ -127,11 +121,11 @@ const crearProducto = async (req, res) => {
 
 };
 
-// Controlador para mostrar formulario de edición
+// Controlador para mostrar formulario de edicion
 const mostrarFormularioEditar = async (req, res) => {
 
   try {
-
+    // obtengo el producto de la base usando su id.
     const producto = await Producto.findByPk(req.params.id);
 
     if (!producto) {
@@ -140,7 +134,7 @@ const mostrarFormularioEditar = async (req, res) => {
 
     res.render("admin/editarProducto", {
       producto,
-      pagina: req.query.pagina || 1
+      pagina: req.query.pagina || 1  //esta linea es para mantener la pagina actual en la que esta el usuario(si no especifico la query string asumo que es la pagina 1)
     });
 
   } catch (error) {
@@ -209,7 +203,7 @@ const editarProducto = async (req, res) => {
 
 };
 
-// Controlador para eliminar (baja lógica)
+// Controlador para eliminar (baja logica)
 const eliminarProducto = async (req, res) => {
 
   try {
