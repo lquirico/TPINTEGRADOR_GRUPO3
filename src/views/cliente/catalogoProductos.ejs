@@ -67,8 +67,10 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.m
     <div class="container mt-4">
 
         <!-- BIENVENIDA -->
-        <h1 class="text-center mb-4">
-            Bienvenido, <%= nombreCliente %>!
+        <h1 
+            id="saludoCliente"
+            class="text-center mb-4">
+            Bienvenido!
         </h1>
 
          <!-- ================== 
@@ -228,5 +230,14 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.m
 
     </div>
 <script src="/js/carrito.js"></script> <!--con esto, el navegador carga el archivo-->
+<script>
+    const nombreCliente =
+        localStorage.getItem("nombreCliente");
+    if(nombreCliente){
+        document.getElementById(
+            "saludoCliente"
+        ).textContent = `Bienvenido, ${nombreCliente}!`;
+    }
+</script>
 </body>
 </html>

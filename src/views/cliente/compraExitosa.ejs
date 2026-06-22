@@ -30,26 +30,7 @@
                 Bookflix - Tienda de libros y películas
             </a>
 
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#menu">
-
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="menu">
-
-                <ul class="navbar-nav ms-auto">
-
-                    <li class="nav-item">
-
-                    </li>
-
-                </ul>
-
-            </div>
+            
 
         </div>
 
@@ -69,14 +50,32 @@
                 <a href="/" class="btn btn-dark">
                     Volver al inicio
                 </a>
-                
+                <a 
+                    id="btnDescargarTicket"
+                    href="#"
+                    target="_blank"
+                    class="btn btn-dark mt-3">
+                    Descargar ticket PDF
+
+                </a>
 
             </div>
 
         </div>
 
     </div>
+    <script>
+        const ticketPDF = localStorage.getItem("ultimoTicketPdf");
+        const botonTicket = document.getElementById("btnDescargarTicket");
 
+        if(ticketPDF){
+            botonTicket.href = ticketPDF; //si el pdf existe, el botón queda visible
+
+        }
+        else{
+            botonTicket.style.display = "none"; //si el pdf no existe, el botón se oculta
+        }
+    </script>
     
 </body>
 </html>

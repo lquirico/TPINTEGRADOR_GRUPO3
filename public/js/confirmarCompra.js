@@ -104,10 +104,10 @@ async function  confirmarCompra(){
     if(resultado.ok){
         localStorage.removeItem("carrito");
         
-        window.open(resultado.pdf, "__blank");
-
-        window.location.href =
-            "/carrito/compra-exitosa";
+        if(resultado.pdf){
+            localStorage.setItem("ultimoTicketPdf", resultado.pdf);// se guarda la ruta del pdf generado para usarla en pantalla "compra exitosa"
+        }
+        window.location.href = "/carrito/compra-exitosa";
     }
     else{
         alert("No se pudo registrar la compra.");

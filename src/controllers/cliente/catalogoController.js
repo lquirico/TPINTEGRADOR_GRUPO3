@@ -1,5 +1,6 @@
 const Producto = require("../../models/Producto");
 
+
 // Controlador para mostrar catálogo de productos
 const mostrarCatalogo = async (req, res) => {
 
@@ -7,12 +8,22 @@ const mostrarCatalogo = async (req, res) => {
 
     const nombreCliente = req.query.nombreCliente;
 
+    // Obtiene la categoría seleccionada en la URL
+    const categoria = req.query.categoria;
+
+    // Objeto base para el filtro
+    const filtro = {
+      activo: true
+    };
+
+    // Si viene una categoría, se agrega al filtro
+    if (categoria) {
+      filtro.categoria = categoria;
+    }
+
     const productos = await Producto.findAll({
-      where: {
-        activo: true
-      }
+      where: filtro
     });
-  
 
     res.render("cliente/catalogoProductos", {
       productos,
