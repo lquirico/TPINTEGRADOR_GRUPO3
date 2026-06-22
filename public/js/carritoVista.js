@@ -175,6 +175,25 @@ function mostrarCarrito(){
                     Total: $${total}
                 </h3>
             
+                <button 
+                    class="btn btn-primary me-2"
+                    onclick= "finalizarCompra()">
+                    Finalizar compra
+                </button>
+
+                <a
+                    href="/productos/catalogo"
+                    class="btn btn-secondary me-2">
+                    Seguir comprando     
+                </a>
+
+                <button
+                    class="btn btn-outline-danger"
+                    onclick="vaciarCarrito()">
+                    Vaciar carrito
+                </button>
+
+
             </div>
         
         </div>
@@ -262,6 +281,28 @@ function eliminarProducto(idProducto){
         mostrarCarrito();
 }
 
+
+//=====================
+// VACIAR CARRITO
+//=====================
+
+//Elimina todos los productos del carrito
+
+function vaciarCarrito(){
+    carrito.length = 0;
+    guardarCarrito();
+    mostrarCarrito();
+}
+
+
+//========================
+// FINALIZAR COMPRA
+//========================
+
+//Por ahora, solo muestra un alert
+function finalizarCompra(){
+    alert("compra finalizada.")
+}
 
 
 
