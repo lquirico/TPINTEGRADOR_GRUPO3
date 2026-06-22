@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar compra</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="#">
+
+                <img
+                    src="/img/bookflix_logo.png"
+                    alt="Logo"
+                    width="40"
+                    class="me-2">
+
+                Bookflix - Tienda de libros y películas
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <div id="resumenCompra" class="mb-4"></div>
+                <h1 class="mb-4">
+                    Confirmación de compra
+                </h1>
+                <p>
+                    ¿Desea confirmar la compra?
+                </p>
+                <button 
+                    class="btn btn-success"
+                    onclick="confirmarCompra()">
+                    Confirmar
+                </button>
+                <a
+                    href="/carrito"
+                    class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+<script src="/js/confirmarCompra.js"></script>
+</body>
+</html>

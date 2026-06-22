@@ -1,10 +1,79 @@
+console.log("carritoRoute cargado.");
+
 const express = require("express");
 const router = express.Router();
 
-//Mostrar la vista del carrito para clientes
-router.get("/", (req, res) => {
-    res.render("cliente/carrito"); 
+const Ventas = require("../../models/Ventas");
+const Venta_productos = require("../../models/Venta_productos");
 
+//===============================
+//MOSTRAR VISTA DEL CARRITO
+//===============================
+
+//la ruta renderiza la vista del carrito del cliente
+router.get("/", (req, res)=> {
+    res.render("cliente/carrito");
 });
 
+
+//==================================
+// MOSTRAR PANTALLA DE CONFIRMACIÓN
+//==================================
+
+//muestra la pantalla donde el cliente ve su resumen de compra
+router.get("/confirmar", (req, res)=> {
+    res.render("cliente/confirmarCompra");
+});
+
+//=========================================
+// CONFIRMAR COMPRA Y  GUARDAR EN LA BASE
+//=========================================
+
+router.post("/confirmar", async(req, res)=> {
+    try{
+        console.log("ENTRÓ AL POST /carrito/confirmar");
+        console.log("Datos recibidos: ", req.body);
+
+        const {cliente_nombre, carrito, total} = req.body;
+
+        //Crea la venta principal
+        //solo guarda datos generales de la compra
+        const venta = await Ventas.create({
+            cliente_nombre,
+            fecha: new Date(),
+            total
+        });
+        console.log("Venta creada.", venta.id);
+
+        //recorre los productos del carrito
+        //cada producto se guarda en la tabla intermedia
+
+        for (const producto of carrito){
+            console.log("Guardando producto: ", producto.id, producto.cantidad);
+
+            await Venta_productos.create({
+                ventaId: venta.id,
+                productoId: producto.id,
+                cantidad: producto.cantidad
+            });
+        }
+        //respuesta exitosa para el frontend
+        res.json({
+            ok:true,
+            mensaje: "Venta registrada correctamente",
+            ventaId: venta.id
+        });
+
+    }//manejo de errores
+    catch(error){
+        console.log("ERROR AL REGISTRAR LA VENTA");
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            mensaje: "Error al registrar la venta",
+            error: error.mesagge
+        });
+    }
+});
 module.exports = router;

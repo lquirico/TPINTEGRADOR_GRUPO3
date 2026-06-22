@@ -208,4 +208,17 @@ function autocompletarLogin() {
 
 }
 
+//============================
+// GUARDAR NOMBRE DEL CLIENTE
+//============================
+
+document 
+    .getElementById("formBienvenida")
+    .addEventListener("submit", function(){ // cuando el cliente completa su nombre y envía el form, se guarda en localStorage.
+       const nombreCliente =                //esto permite usarlo después para el registro de ventas.
+            document.getElementById("nombreCliente").value;
+                                                            
+        localStorage.setItem("nombreCliente", nombreCliente);
+    });
+
 </script>

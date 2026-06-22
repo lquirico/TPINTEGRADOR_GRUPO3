@@ -299,11 +299,10 @@ function vaciarCarrito(){
 // FINALIZAR COMPRA
 //========================
 
-//Por ahora, solo muestra un alert
-function finalizarCompra(){
-    alert("compra finalizada.")
-}
 
+function finalizarCompra(){
+    window.location.href= "/carrito/confirmar"; //manda al cliente a otra página al clickear en "finalizar compra"
+}
 
 
 
