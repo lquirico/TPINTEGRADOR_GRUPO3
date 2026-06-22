@@ -64,7 +64,7 @@ app.use("/carrito", carritoRoute);
 //API
 app.use("/api/productos", productosApiRoutes);
 app.use("/api/admin", authApiRoutes);
-d903adeda966cb72077a19cb2ca0d20cd3aabcc8
+
 
 // Página principal
 app.get("/", (req, res) => {

@@ -48,6 +48,12 @@ function mostrarCarrito(){
 
     contenedorCarrito.innerHTML="";
 
+    //====================================
+    // CALCULAR EL TOTAL DEL CARRITO
+    //====================================
+
+    let total = 0; //esta variable almacena el total de la compra y va a ir acumulando producto x producto mientras recorremos el carrito
+
     //==========================================
     // RECORRER TODOS LOS PRODUCTOS DEL CARRITO
     //==========================================
@@ -63,7 +69,13 @@ function mostrarCarrito(){
 
         const card = document.createElement("div"); //se crea un elemento <div> utilizando js.
                                                 //va a contener toda la información del producto
-        card.className = "card mb-3";        
+        card.className = "card mb-3";    
+        
+    //===================
+    // SUMAR AL TOTAL
+    //===================
+        
+        total+= producto.precio * producto.cantidad; //multiplica el precio x la cantidad  y lo acumula en la variable "total"
         
         
     //================================
@@ -103,10 +115,36 @@ function mostrarCarrito(){
                     <strong>${producto.precio}</strong>
                 </p>
 
-                <p class="mb-1">
-                    Cantidad: 
+                <div class="d-flex align-items-center gap-2 mt-2">
+                    <span>Cantidad:</span>
+
+                    <button
+                        class= "btn btn-outline-danger btn-sm"
+                        onclick= "disminuirCantidad(${producto.id})">
+                        -
+                    </button>
                     <strong>${producto.cantidad}</strong>
-                </p>        
+                    <button 
+                        class="btn btn-outline-success btn-sm"
+                        onclick= "aumentarCantidad(${producto.id})">
+                        +
+                    </button>
+                
+               
+                </div>
+
+                <div class="mt-3">
+
+                    <button
+                        class="btn btn-danger btn-sm"
+                        onclick= "eliminarProducto(${producto.id})">
+
+                        Eliminar 
+
+                    </button>
+               
+               </div>
+
             </div>
         
         </div>
@@ -121,6 +159,30 @@ function mostrarCarrito(){
     contenedorCarrito.appendChild(columna); //agrega el elemento recién creado dentro del contendor principal
                                         //esto se repite una vez x cada producto.
 });
+
+    //=============================
+    // MOSTRAR TOTAL DEL CARRITO
+    //=============================
+    
+    const resumen = document.createElement("div");
+
+    resumen.className=
+        "col-lg-7 col-md-9 mx-auto mt-4";
+    resumen.innerHTML= `
+        <div class = "card shadow">
+            <div class= "card-body text-center">
+                <h3>
+                    Total: $${total}
+                </h3>
+            
+            </div>
+        
+        </div>
+    
+    `;
+    contenedorCarrito.appendChild(resumen);
+
+
 }
 
 
@@ -132,6 +194,73 @@ mostrarCarrito(); //lo primero que se ejecuta cuando carga la página para mostr
                   // si el carrito está vacío, se muestra una card amarilla de boostrap con el mensaje que indica que no hay productos.
 
 
+//=================================
+// GUARDAR CARRITO EN LOCALSTORAGE
+//=================================
+
+//Actualiza el LocalStorage con el contenido actual del carrito
+//Cada vez que se modifica una cantidad, hay que volver a guardar el arreglo.
+
+function guardarCarrito(){
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+
+
+//===============================
+// AUMENTAR CANTIDAD
+//===============================
+
+function aumentarCantidad(idProducto){ //recibe el id del producto seleccionado
+    const producto = carrito.find(item => item.id === idProducto); 
+
+    if(producto){
+        producto.cantidad++; //busca el producto dentro del carrito y aumenta su cantidad en 1
+
+    }
+
+    guardarCarrito();
+    mostrarCarrito();
+
+}
+
+//================================
+// DISMINUIR CANTIDAD
+//================================
+
+function disminuirCantidad(idProducto){ //recibe el id del producto seleccionado
+    const producto = carrito.find(item => item.id === idProducto);
+    
+    if(producto && producto.cantidad > 1){ 
+
+        producto.cantidad--; //si la cantidad es mayor a 1, la disminuye
+                             //si la cantidad llega a 1, no baja más para evitar cantidades en 0
+
+    }
+    guardarCarrito();
+    mostrarCarrito();
+}
+
+
+//==========================
+// ELIMINAR PRODUCTO 
+//==========================
+
+//Elimina completamente un producto utilizando su id
+
+function eliminarProducto(idProducto){
+    const indiceProducto =
+        carrito.findIndex(  //"findIndex" busca la posición del producto
+            item => item.id === idProducto
+        );
+    
+        if(indiceProducto !== -1){
+            carrito.splice(indiceProducto, 1); //.splice elimina elementos 
+        }
+
+        guardarCarrito();
+        mostrarCarrito();
+}
 
 
 
