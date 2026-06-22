@@ -61,10 +61,11 @@ function agregarAlCarrito(producto){
     //Guarda de nuevo el carrito
     localStorage.setItem(
         "carrito",
-        JSON.stringify(carrito) //stringify convierte el objeto en texto ya que el localStorage solo almacena texto.
-
+        JSON.stringify(carrito), //stringify convierte el objeto en texto ya que el localStorage solo almacena texto.
+        mostrarMensajeCarrito()
     );
     actualizarContadorCarrito();
+    
     
     
 
@@ -95,3 +96,24 @@ function actualizarContadorCarrito(){
 }
 
 actualizarContadorCarrito(); // cuando abre el catálogo carga directammente la cantidad actual
+
+
+//========================================
+//MENSAJE DE PRODUCTO AGREGADO AL CARRITO
+//========================================
+
+function mostrarMensajeCarrito(){
+    const mensaje = document.getElementById("mensajeCarrito");
+
+    if(!mensaje){
+        return;
+    }
+
+    //mostrar alerta
+    mensaje.classList.remove("d-none");
+
+    //ocultar alerta despues de 3 segundos
+    setTimeout(() =>{
+        mensaje.classList.add("d-none");
+    }, 3000);
+}
