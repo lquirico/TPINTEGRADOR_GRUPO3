@@ -99,12 +99,15 @@ async function  confirmarCompra(){
 
     //si la venta se guarda correctamente, se vacía el localStorage
     const resultado = await respuesta.json();
+    console.log("Respuesta backend: ", resultado);
 
     if(resultado.ok){
         localStorage.removeItem("carrito");
-        alert("Compra registrada correctamente.");
+        
+        window.open(resultado.pdf, "__blank");
 
-        window.location.href ="/carrito";
+        window.location.href =
+            "/carrito/compra-exitosa";
     }
     else{
         alert("No se pudo registrar la compra.");

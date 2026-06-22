@@ -2,9 +2,35 @@ console.log("carritoRoute cargado.");
 
 const express = require("express");
 const router = express.Router();
-
+const Producto = require("../../models/Producto");
 const Ventas = require("../../models/Ventas");
 const Venta_productos = require("../../models/Venta_productos");
+const {generarTicketPdf} = require("../../services/pdfService");
+
+//================================
+//MOSTRAR TICKET DE UNA VENTA
+//===============================
+//esta vista la va a utilizar Puppeteer para generar el PDF
+router.get("/ticket/:id", async(req, res) => {
+    const venta = await Ventas.findByPk(
+        req.params.id, {
+            include:{
+                model: Producto,
+                as:"productos"
+            }
+        }
+    );
+    res.render(
+        "cliente/ticket",
+        {
+            venta,
+            productos: venta.productos
+        }
+    );
+});
+
+
+
 
 //===============================
 //MOSTRAR VISTA DEL CARRITO
@@ -57,11 +83,19 @@ router.post("/confirmar", async(req, res)=> {
                 cantidad: producto.cantidad
             });
         }
-        //respuesta exitosa para el frontend
+        //===========================
+        // GENERAR PDF DEL TICKET
+        //===========================
+        const rutaPDF= await generarTicketPdf(venta.id);
+
+        //==================
+        //RESPUESTA EXITOSA
+        //==================
         res.json({
-            ok:true,
+            ok: true,
             mensaje: "Venta registrada correctamente",
-            ventaId: venta.id
+            ventaId:venta.id,
+            pdf: rutaPDF
         });
 
     }//manejo de errores
@@ -72,8 +106,17 @@ router.post("/confirmar", async(req, res)=> {
         res.status(500).json({
             ok: false,
             mensaje: "Error al registrar la venta",
-            error: error.mesagge
+            error: error.message
         });
     }
 });
+
+//====================================
+// MOSTRAR PANTALLA DE COMPRA EXITOSA
+//====================================
+router.get("/compra-exitosa", (req, res)=> {
+    res.render("cliente/compraExitosa");
+}); 
+
+
 module.exports = router;
