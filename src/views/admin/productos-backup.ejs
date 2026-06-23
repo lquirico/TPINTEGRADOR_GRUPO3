@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard de Productos</title>
+      <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+
+<body>
+        <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container">
+            
+
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="/img/bookflix_logo.png"
+                     alt="Logo"
+                     width="40"
+                     class="me-2">
+
+                Bookflix - Tienda de libros y peliculas by Colomer & Quirico
+            </a>
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#menu">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+<div class="container py-5">
+
+    <!-- CABECERA -->
+    <div class="pagina-header">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+            <div>
+                <h1 class="mb-2">Listado de Productos</h1>
+                <p class="text-muted mb-0">
+                    Administración de libros y películas
+                </p>
+            </div>
+
+            <div class="d-flex gap-3 align-items-center mt-3 mt-md-0">
+
+                <a
+                    href="/admin/productos/nuevo"
+                    class="btn btn-primary">
+
+                    Nuevo Producto
+
+                </a>
+                <form method="GET" action="/admin/productos"  class="d-flex align-items-center gap-2">
+
+                    <label  class="mb-0 fw-semibold">Filtrar por tipo:</label>
+
+                    <select
+                        name="categoria"
+                         class="form-select filtro-categoria"
+                        onchange="this.form.submit()">
+
+                        <option
+                            value="Todos"
+                            <%= filtro === "Todos" ? "selected" : "" %>>
+                            Todos
+                        </option>
+
+                        <option
+                            value="Libro"
+                            <%= filtro === "Libro" ? "selected" : "" %>>
+                            Libros
+                        </option>
+
+                        <option
+                            value="Pelicula"
+                            <%= filtro === "Pelicula" ? "selected" : "" %>>
+                            Peliculas
+                        </option>
+
+                    </select>
+
+                </form>
+
+                <hr>
+
+                <a
+                    href="/logout"
+                    class="btn btn-outline-secondary">
+
+                    Cerrar sesión
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <% productos.forEach(producto => { %>
+
+        <div class="producto-card">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-3 text-center">
+
+                    <img
+                        src="/uploads/<%= producto.imagen %>"
+                        alt="<%= producto.nombre %>"
+                        class="producto-imagen">
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="d-flex justify-content-between align-items-start flex-wrap">
+
+                        <h3 class="mb-3">
+                            <%= producto.nombre %>
+                        </h3>
+
+                        <a
+                            href="/admin/productos/editar/<%= producto.id %>?pagina=<%= paginaActual %>"
+                            class="btn btn-warning btn-sm">
+
+                            Editar
+
+                        </a>
+
+                    </div>
+
+                    <p>
+                        <strong>Categoría:</strong>
+                        <%= producto.categoria %>
+                    </p>
+
+                    <p>
+                        <strong>Descripción:</strong>
+                        <%= producto.descripcion %>
+                    </p>
+
+                    <p>
+                        <strong>Género:</strong>
+                        <%= producto.genero %>
+                    </p>
+
+                    <p>
+                        <strong>Precio:</strong>
+                        $<%= producto.precio %>
+                    </p>
+
+                    <p>
+                        <strong>Estado:</strong>
+
+                        <span class="<%= producto.activo ? 'estado-activo' : 'estado-inactivo' %>">
+                            <%= producto.activo ? 'Activo' : 'Inactivo' %>
+                        </span>
+                    </p>
+
+                    <% if(producto.activo) { %>
+
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalEliminar<%= producto.id %>">
+
+                            Eliminar
+
+                        </button>
+
+                    <% } else { %>
+
+                        <button
+                            type="button"
+                            class="btn btn-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalActivar<%= producto.id %>">
+
+                            Activar
+
+                        </button>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- MODAL ELIMINAR -->
+        <div
+            class="modal fade"
+            id="modalEliminar<%= producto.id %>"
+            tabindex="-1">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Confirmar eliminación
+                        </h5>
+                    </div>
+
+                    <div class="modal-body">
+                        ¿Está seguro de eliminar
+                        "<%= producto.nombre %>"?
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+
+                            No
+
+                        </button>
+
+                        <form
+                            action="/admin/productos/eliminar/<%= producto.id %>"
+                            method="POST">
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger">
+
+                                Sí
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MODAL ACTIVAR -->
+        <div
+            class="modal fade"
+            id="modalActivar<%= producto.id %>"
+            tabindex="-1">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Confirmar activación
+                        </h5>
+                    </div>
+
+                    <div class="modal-body">
+                        ¿Está seguro de activar
+                        "<%= producto.nombre %>"?
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+
+                            No
+
+                        </button>
+
+                        <form
+                            action="/admin/productos/activar/<%= producto.id %>"
+                            method="POST">
+
+                            <button
+                                type="submit"
+                                class="btn btn-success">
+
+                                Sí
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    <% }) %>
+
+</div>
+
+        <!-- PAGINADO -->
+<nav class="mt-4">
+
+    <ul class="pagination justify-content-center">
+
+        <% if (paginaActual > 1) { %>
+
+            <li class="page-item">
+
+                <a
+                    class="page-link"
+                    href="/admin/productos?categoria=<%= filtro %>&pagina=<%= paginaActual - 1 %>">
+
+                    Anterior
+
+                </a>
+
+            </li>
+
+        <% } %>
+
+        <% for(let i = 1; i <= totalPaginas; i++) { %>
+
+            <li class="page-item <%= i === paginaActual ? 'active' : '' %>">
+
+                <a
+                    class="page-link"
+                    href="/admin/productos?categoria=<%= filtro %>&pagina=<%= i %>">
+
+                    <%= i %>
+
+                </a>
+
+            </li>
+
+        <% } %>
+
+        <% if (paginaActual < totalPaginas) { %>
+
+            <li class="page-item">
+
+                <a
+                    class="page-link"
+                    href="/admin/productos?categoria=<%= filtro %>&pagina=<%= paginaActual + 1 %>">
+
+                    Siguiente
+
+                </a>
+
+            </li>
+
+        <% } %>
+
+    </ul>
+
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -97,7 +97,7 @@ async function  confirmarCompra(){
         body: JSON.stringify(datosCompra)
     });
 
-    //si la venta se guarda correctamente, se vacía el localStorage
+    //si la venta se guarda correctamente, se vacia el localStorage
     const resultado = await respuesta.json();
     console.log("Respuesta backend: ", resultado);
 

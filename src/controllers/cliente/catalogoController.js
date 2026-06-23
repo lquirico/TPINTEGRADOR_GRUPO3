@@ -1,39 +1,75 @@
 const Producto = require("../../models/Producto");
 
-
-// Controlador para mostrar catálogo de productos
 const mostrarCatalogo = async (req, res) => {
 
   try {
 
-    const nombreCliente = req.query.nombreCliente;
+    const nombreCliente =
+      req.query.nombreCliente;
 
-    // Obtiene la categoría seleccionada en la URL
-    const categoria = req.query.categoria;
+    const categoria =
+      req.query.categoria || "Todos";
 
-    // Objeto base para el filtro
+    const pagina =
+      parseInt(req.query.pagina) || 1;
+
+    const limite = 4;
+
     const filtro = {
       activo: true
     };
 
-    // Si viene una categoría, se agrega al filtro
-    if (categoria) {
+    if (categoria !== "Todos") {
+
       filtro.categoria = categoria;
+
     }
 
-    const productos = await Producto.findAll({
-      where: filtro
-    });
+    const totalProductos =
+      await Producto.count({
+        where: filtro
+      });
 
-    res.render("cliente/catalogoProductos", {
-      productos,
-      nombreCliente
-    });
+    const totalPaginas =
+      Math.ceil(totalProductos / limite);
+
+    const productos =
+      await Producto.findAll({
+
+        where: filtro,
+
+        limit: limite,
+
+        offset: (pagina - 1) * limite,
+
+        order: [["id", "ASC"]]
+
+      });
+
+    res.render(
+      "cliente/catalogoProductos",
+      {
+
+        productos,
+
+        nombreCliente,
+
+        categoria,
+
+        paginaActual: pagina,
+
+        totalPaginas
+
+      }
+    );
 
   } catch (error) {
 
     console.log(error);
-    res.send("Error al cargar el catálogo");
+
+    res.send(
+      "Error al cargar el catalogo"
+    );
 
   }
 

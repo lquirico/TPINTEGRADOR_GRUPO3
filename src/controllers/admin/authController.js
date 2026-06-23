@@ -85,17 +85,19 @@ const mostrarRegistro = (req, res) => {
 const registrar = async (req, res) => {
 
   try {
-
+    // aca obtengo los datos del formulario de registro (email, password y confirmarPassword) para validar que se hayan ingresado correctamente y luego crear un nuevo usuario administrador en la base de datos si todo es correcto
     const { email, password, confirmarPassword } = req.body;
 
+    // valido que se hayan ingresado todos los campos necesarios (email, password y confirmarPassword) para el registro
     if (!email || !password || !confirmarPassword) {
-
+      // si falta algun campo, envio un mensaje de error indicando que todos los campos son obligatorios
       return res.render("admin/registro", {
         error: "Todos los campos son obligatorios"
       });
 
     }
 
+    // valido que las contraseñas coincidan
     if (password !== confirmarPassword) {
 
       return res.render("admin/registro", {
@@ -104,10 +106,11 @@ const registrar = async (req, res) => {
 
     }
 
+    // valido que no exista un usuario con el mismo email
     const usuarioExistente = await UsuarioAdmin.findOne({
       where: { email }
     });
-
+    //si ya existe, envio un mensaje de error indicando que ya existe un usuario con ese email
     if (usuarioExistente) {
 
       return res.render("admin/registro", {
@@ -115,7 +118,7 @@ const registrar = async (req, res) => {
       });
 
     }
-
+    // si todo es correcto, encripto la contraseña utilizando bcrypt antes de almacenarla en la base de datos para mayor seguridad
     const passwordHash = await bcrypt.hash(password, 10);
 
     await UsuarioAdmin.create({
@@ -125,6 +128,7 @@ const registrar = async (req, res) => {
 
     });
 
+    // redirijo al usuario a la página de inicio después de un registro exitoso
     res.redirect("/");
 
   } catch (error) {
