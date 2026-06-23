@@ -4,7 +4,7 @@ const express = require("express"); // aca se importa express para crear la apli
 const path = require("path"); // se importa path para manejar rutas de archivos como por ejemplo para servir archivos estaticos
 const session = require("express-session"); // se importa express-session para manejar sesiones de usuario
 
-const sequelize = require("./config/database"); // se importa la configuracion de la base de datos usando Sequelize
+//const sequelize = require("./config/database"); // se importa la configuracion de la base de datos usando Sequelize
 const carritoRoute = require("./routes/cliente/carritoRoute"); //se importan las rutas relacionadas con el carrito (visualización del carrito, modificación de productos y proceso de compra)
 const sequelize = require("./config/database"); // se importa la configuración de la base de datos usando Sequelize
 
@@ -18,7 +18,7 @@ const catalogoRoute = require("./routes/cliente/catalogoRoute"); // se importan 
 // API
 const productosApiRoutes = require("./routes/api/productosApiRoutes"); //importo las rutas para la API de productos
 const authApiRoutes = require("./routes/api/authApiRoutes"); // importo las rutas para la API de autenticacion
-
+const ventasApiRoutes = require("./routes/api/ventasApiRoutes"); // importo las rutas para la API de ventas
 // Crear app
 const app = express(); // se crea una instancia de la aplicacion Express (servidor web que manejara las solicitudes HTTP y las respuestas)
 
@@ -65,7 +65,8 @@ app.use("/carrito", carritoRoute);
 //API
 app.use("/api/productos", productosApiRoutes);
 app.use("/api/admin", authApiRoutes);
-
+app.use("/api/ventas", ventasApiRoutes);
+app.use("/admin", productosRoutes);
 
 // Página principal
 app.get("/", (req, res) => {
